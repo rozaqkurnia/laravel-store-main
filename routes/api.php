@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ShoppingCartController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -24,4 +25,9 @@ Route::get('products', [ProductController::class, 'index']);
 Route::get('products/{id}', [ProductController::class, 'show']);
 Route::post('products/{id}/like', [ProductController::class, 'like']);
 Route::get('user', [UserController::class, 'random']);
+
+Route::post('products/{id}/addToCart', [ShoppingCartController::class, 'addItem']);
+Route::delete('products/{id}/removeFromCart', [ShoppingCartController::class, 'removeItem']);
+//Route::post('products/{id}/addToCart', [ShoppingCartController::class, 'addToCart']);
+//Route::post('products/{id}/removeFromCart', [ShoppingCartController::class, 'removeFromCart']);
 
