@@ -26,8 +26,10 @@ Route::get('products/{id}', [ProductController::class, 'show']);
 Route::post('products/{id}/like', [ProductController::class, 'like']);
 Route::get('user', [UserController::class, 'random']);
 
-Route::post('products/{id}/addToCart', [ShoppingCartController::class, 'addItem']);
-Route::delete('products/{id}/removeFromCart', [ShoppingCartController::class, 'removeItem']);
+Route::post('test', [ShoppingCartController::class, 'index']);
+Route::post('products/{id}/plus', [ShoppingCartController::class, 'increment']);
+Route::post('products/{id}/minus', [ShoppingCartController::class, 'decrement']);
+Route::delete('user/{id}/cart/', [ShoppingCartController::class, 'destroy']);
 //Route::post('products/{id}/addToCart', [ShoppingCartController::class, 'addToCart']);
 //Route::post('products/{id}/removeFromCart', [ShoppingCartController::class, 'removeFromCart']);
 

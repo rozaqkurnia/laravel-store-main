@@ -24,9 +24,10 @@ class ShoppingCartController extends Controller
 				}
 			}
 		}
+		return $orderHeader;
 	}
 	
-	public function addItem($productId, Request $request)
+	public function increment($productId, Request $request)
 	{
 		$user_id = 1;
 		if($user_id != null) {
@@ -41,7 +42,7 @@ class ShoppingCartController extends Controller
 		}
 	}
 	
-	public function removeItem($productId, Request $request)
+	public function decrement($productId, Request $request)
 	{
 		$user_id = 1;
 		if($user_id != null) {
@@ -49,14 +50,30 @@ class ShoppingCartController extends Controller
 				->where('product_id', $productId)
 				->first();
 			if($cart == null){
-				return response('anda belum menambahkan product ini.', Response::HTTP_BAD_REQUEST);
+				return response('You haven\'t add this item on your cart.', Response::HTTP_BAD_REQUEST);
 			}
 			if($cart->qty <= 1){
 				$cart->delete();
-				return response('cart updated', Response::HTTP_OK);
+				return response('an item removed from cart successfully', Response::HTTP_OK);
 			}
 			$cart->qty--;
 			$cart->save();
+		}
+	}
+	
+	public function destroy($userId)
+	{
+		$user_id = $userId;
+		if($user_id != null) {
+			$carts = ShoppingCart::where('user_id', $user_id)->get();
+			if($carts != null){
+				foreach($carts as $item){
+					$item->delete();
+				}
+				return response('items has been removed from cart successfully', Response::HTTP_NO_CONTENT);
+			} else {
+				return response('your cart is empty!', Response::HTTP_BAD_REQUEST);
+			}
 		}
 	}
 }
