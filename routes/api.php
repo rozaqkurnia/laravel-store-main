@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ShoppingCartController;
+use App\Http\Controllers\SecretController;
 use App\Http\Controllers\UserController;
+use Laravel\Passport\Http\Controllers\AccessTokenController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,6 +19,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::post('login', [AccessTokenController::class, 'issueToken'])
+    ->middleware(['api-login', 'throttle']);
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
@@ -30,6 +35,7 @@ Route::post('test', [ShoppingCartController::class, 'index']);
 Route::post('products/{id}/plus', [ShoppingCartController::class, 'increment']);
 Route::post('products/{id}/minus', [ShoppingCartController::class, 'decrement']);
 Route::delete('user/{id}/cart/', [ShoppingCartController::class, 'destroy']);
+Route::get('secret', [SecretController::class, 'index']);
 //Route::post('products/{id}/addToCart', [ShoppingCartController::class, 'addToCart']);
 //Route::post('products/{id}/removeFromCart', [ShoppingCartController::class, 'removeFromCart']);
 
